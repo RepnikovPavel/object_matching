@@ -1,3 +1,4 @@
 [submodule "Docker"]
 	path = Docker
 	url = https://github.com/RepnikovPavel/Docker.git
+	branch = master
