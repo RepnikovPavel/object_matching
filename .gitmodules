@@ -2,3 +2,12 @@
 	path = Docker
 	url = https://github.com/RepnikovPavel/Docker.git
 	branch = master
+[submodule "MatchZoo"]
+	path = MatchZoo
+	url = https://github.com/NTMC-Community/MatchZoo.git
+[submodule "NeuronBlocks"]
+	path = NeuronBlocks
+	url = https://github.com/microsoft/NeuronBlocks.git
+[submodule "DeepPavlov"]
+	path = DeepPavlov
+	url = https://github.com/deeppavlov/DeepPavlov.git

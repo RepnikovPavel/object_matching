@@ -1,0 +1,1 @@
+python3 -c "import torch;print('version:',torch.__version__,'\ncuda:',torch.cuda.is_available())"
