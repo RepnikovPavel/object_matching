@@ -1,0 +1,6 @@
+pandas
+fastparquet
+easydict
+opencv-python
+matplotlib
+graphviz
