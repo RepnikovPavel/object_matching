@@ -133,12 +133,24 @@ class d1_pure_strings(Dataset):
         self.dataset.text_mode()
         self.features = self.dataset.features[:2]
         self.target = self.dataset.target
-        self.target_unique_values = self.dataset.target_unique_values
+        self.target_unique_values_ = self.dataset.target_unique_values
+        self.mode = 0
+        self.target_unique_values = self.target_unique_values_.copy()
     def __getitem__(self, idx):
         data_= self.dataset[idx]
-        return self.adapter(data_[0]), data_[1]
+        if self.mode ==0:
+            return self.adapter(data_[0]), data_[1].split('->')[0]
+        elif self.mode ==1:
+            return self.adapter(data_[0]), data_[1]
     def __len__(self):
         return len(self.dataset)
+    def level0_mode(self):
+        self.target_unique_values = np.unique([el.split('->')[0] for el in self.target_unique_values_.copy()])
+        self.mode = 0
+    def level1_mode(self):
+        self.target_unique_values = self.target_unique_values_.copy()
+        self.mode = 1
+
 
 
 
