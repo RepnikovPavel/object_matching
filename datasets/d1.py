@@ -77,7 +77,7 @@ class d1_dataset(Dataset):
 
 
     def __len__(self):
-        return len(self.imgs_train_ids)
+        return len(self.all)
                 
     def text_mode(self):
         self.mode = 'text'
@@ -125,6 +125,19 @@ class d1_adapter:
         else:
             logging.error(f'input with dims {text.shape} not supprted')
             return None
+        
+class d1_pure_strings(Dataset):
+    def __init__(self, root_):
+        self.dataset = d1_dataset(root_)
+        self.adapter = d1_adapter()
+        self.dataset.text_mode()
+        self.features = self.dataset.features[:2]
+        self.target = self.dataset.target
+    def __getitem__(self, idx):
+        data_= self.dataset[idx]
+        return self.adapter(data_[0]), data_[1]
+    def __len__(self):
+        return len(self.dataset)
 
 
 
