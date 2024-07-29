@@ -13,8 +13,7 @@ class d1_dataset(Dataset):
     features: List[str]
     target: str
     mode: str
-    imgs_train_ids: List[str]
-
+    target_unique_values: List[str]
     def __init__(self, root_:str):
 
         self.root_ = root_
@@ -53,6 +52,7 @@ class d1_dataset(Dataset):
         all['product_id'] = imgs_train_ids 
         all[self.target] = ['->'.join(x) for x in splitted]
         self.all = all
+        self.target_unique_values= self.all[self.target].unique()
 
         self.text_mode()
         
@@ -133,6 +133,7 @@ class d1_pure_strings(Dataset):
         self.dataset.text_mode()
         self.features = self.dataset.features[:2]
         self.target = self.dataset.target
+        self.target_unique_values = self.dataset.target_unique_values
     def __getitem__(self, idx):
         data_= self.dataset[idx]
         return self.adapter(data_[0]), data_[1]
