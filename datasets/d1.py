@@ -58,22 +58,23 @@ class d1_dataset(Dataset):
         
     def __getitem__(self, idx:int):
         row = self.all.iloc[idx:idx+1]
+        uid = row['product_id'].values[0]        
         
         if self.mode == 'text':
             text_ = row[self.features].values[0]
             target_ = row[self.target].values[0]
-            return text_,target_
+            return uid, text_,target_
         elif self.mode == 'img':
             img_ = cv2.cvtColor(cv2.imread(os.path.join(self.root_, 'images', row['product_id'].values[0]+'.jpg')),
                             cv2.COLOR_RGB2BGR)
             target_ = row[self.target].values[0]
-            return img_,target_
+            return uid, img_,target_
         elif self.mode == 'multi':
             text_ = row[self.features].values[0]
             img_ = cv2.cvtColor(cv2.imread(os.path.join(self.root_, 'images', row['product_id'].values[0]+'.jpg')),
                             cv2.COLOR_RGB2BGR)
             target_ = row[self.target].values[0]
-            return text_,img_,target_
+            return uid, text_, img_,target_
 
 
     def __len__(self):
@@ -137,11 +138,11 @@ class d1_pure_strings(Dataset):
         self.mode = 0
         self.target_unique_values = self.target_unique_values_.copy()
     def __getitem__(self, idx):
-        data_= self.dataset[idx]
-        if self.mode ==0:
-            return self.adapter(data_[0]), data_[1].split('->')[0]
+        uid, text, target = self.dataset[idx]
+        if self.mode == 0:
+            return uid, self.adapter(text), target.split('->')[0]
         elif self.mode ==1:
-            return self.adapter(data_[0]), data_[1]
+            return uid, self.adapter(text), target[1]
     def __len__(self):
         return len(self.dataset)
     def level0_mode(self):
